@@ -4,10 +4,10 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class Database {
+public class ConnectionPool {
     final private DataSource dataSource;
 
-    Database() {
+    ConnectionPool() {
         JDBCPool pool = new JDBCPool();
         pool.setUrl("jdbc:hsqldb:hsql://localhost/loja-virtual");
         pool.setUser("SA");

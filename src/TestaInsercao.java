@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class TestaInsercao {
     public static void main(String[] args) throws SQLException {
-        try (Connection connection = new Database().getConnection()) {
+        try (Connection connection = new ConnectionPool().getConnection()) {
             connection.setAutoCommit(false);
 
             try {
