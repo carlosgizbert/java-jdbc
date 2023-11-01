@@ -5,7 +5,7 @@ import java.sql.Statement;
 
 public class TestaRemocao {
     public static void main(String[] args) throws SQLException {
-        Connection connection = Database.getConnection();
+        Connection connection = new Database().getConnection();
 
         Statement stmt = connection.createStatement();
         boolean resultado = stmt.execute(

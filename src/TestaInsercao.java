@@ -2,14 +2,16 @@ import java.sql.*;
 
 public class TestaInsercao {
     public static void main(String[] args) throws SQLException {
-        try (Connection connection = Database.getConnection()) {
+        try (Connection connection = new Database().getConnection()) {
             connection.setAutoCommit(false);
+
             try {
                 String sql = "insert into Produto (nome, descricao) values(?, ?)";
                 PreparedStatement statement = connection.prepareStatement(
                         sql,
                         Statement.RETURN_GENERATED_KEYS
                 );
+
                 adiciona(statement, "TV LCD", "55 polegadas");
                 adiciona(statement, "Blueray", "HDMI");
                 statement.close();
