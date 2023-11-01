@@ -1,4 +1,4 @@
-package JDBC;
+package DAO;
 
 import Modelo.Produto;
 

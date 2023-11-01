@@ -1,4 +1,4 @@
-import JDBC.ProdutosDAO;
+import DAO.ProdutosDAO;
 import Modelo.Produto;
 
 import java.sql.*;
