@@ -2,12 +2,35 @@ import java.sql.*;
 
 public class TestaInsercao {
     public static void main(String[] args) throws SQLException {
-        Connection connection = Database.getConnection();
+        try (Connection connection = Database.getConnection()) {
+            connection.setAutoCommit(false);
+            try {
+                String sql = "insert into Produto (nome, descricao) values(?, ?)";
+                PreparedStatement statement = connection.prepareStatement(
+                        sql,
+                        Statement.RETURN_GENERATED_KEYS
+                );
+                adiciona(statement, "TV LCD", "55 polegadas");
+                adiciona(statement, "Blueray", "HDMI");
+                statement.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                connection.rollback();
+                System.out.println("Rollback efetuado");
+            }
+        }
+    }
 
-        Statement statement = connection.createStatement();
-        boolean resultado = statement.execute(
-                "insert into Produto (nome, descricao) values('Notebook', 'Notebook i5')",
-                Statement.RETURN_GENERATED_KEYS);
+    private static void adiciona(PreparedStatement statement, String nome, String descricao) throws SQLException {
+
+        if (nome.equals("Blueray")) {
+            throw new IllegalArgumentException("Problema ocorrido");
+        }
+
+        statement.setString(1, nome);
+        statement.setString(2, descricao);
+
+        boolean resultado = statement.execute();
         System.out.println(resultado);
 
         ResultSet resultSet = statement.getGeneratedKeys();
@@ -16,7 +39,7 @@ public class TestaInsercao {
             System.out.println(id + " gerado");
         }
 
-        connection.close();
+        resultSet.close();
     }
 
 
